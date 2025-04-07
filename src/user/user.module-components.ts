@@ -5,6 +5,8 @@ import { ConfigService } from '@nestjs/config';
 import { RegisterUserUseCase } from './application/use-cases/register-user/register-user.usecase';
 import { BcryptEncryptorService } from './infrastructure/services/bcrypt-encryptor.service';
 import { JwtTokenService } from './infrastructure/services/jwt-token.service';
+import { LoginUserUseCase } from './application/use-cases/login-user/login-user.usecase';
+import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 
 export const REPOSITORIES: Provider[] = [
   {
@@ -17,7 +19,7 @@ export const CONTROLLERS = [UserController];
 
 export const CLIENTS: Provider[] = [];
 
-export const USE_CASES: Provider[] = [RegisterUserUseCase];
+export const USE_CASES: Provider[] = [RegisterUserUseCase, LoginUserUseCase];
 
 export const SERVICES: Provider[] = [
   {
@@ -32,4 +34,5 @@ export const SERVICES: Provider[] = [
     provide: 'TokenService',
     useClass: JwtTokenService,
   },
+  JwtStrategy,
 ];
