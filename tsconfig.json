@@ -19,6 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@src/*": ["./src/*"],
+      "@user/*": ["./src/user/*"],
+      "@config/*": ["./src/config/*"],
       "@test/*": ["./test/*"]
     }
   },
