@@ -14,8 +14,13 @@
 docker-compose up -d
 ```
 
-6. Levantar:
+6. Correr migraciones
+
+```
+npm run typeorm:migrate
+```
+
+7. Levantar:
 
 ```
 npm run start:dev
-yarn start:dev
