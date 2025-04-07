@@ -7,6 +7,7 @@ import {
   Param,
   Body,
   Patch,
+  Delete,
 } from '@nestjs/common';
 import { UserRoleGuard } from '@src/user/infrastructure/guards/user-role.guard';
 import { RoleProtected } from '@src/user/infrastructure/decorators/role-protected.decorator';
@@ -19,6 +20,7 @@ import { CreateMovieUseCase } from '@src/movies/application/use-cases/create-mov
 import { CreateMovieRequest } from '@src/movies/application/use-cases/create-movie/create-movie.request';
 import { UpdateMovieRequest } from '@src/movies/application/use-cases/update-movie/update-movie.request';
 import { UpdateMovieUseCase } from '@src/movies/application/use-cases/update-movie/update-movie.usecase';
+import { DeleteMovieUseCase } from '@src/movies/application/use-cases/delete-movie/delete-movie.usecase';
 
 @Controller('movies')
 export class MovieController {
@@ -28,6 +30,7 @@ export class MovieController {
     private readonly getMovieByIdUseCase: GetMovieByIdUseCase,
     private readonly createMovieUseCase: CreateMovieUseCase,
     private readonly updateMovieUseCase: UpdateMovieUseCase,
+    private readonly deleteMovieUseCase: DeleteMovieUseCase,
   ) {}
 
   @UseGuards(AuthGuard(), UserRoleGuard)
@@ -58,6 +61,14 @@ export class MovieController {
   async updateMovie(@Param('id') id: string, @Body() body: UpdateMovieRequest) {
     const movie = await this.updateMovieUseCase.execute(id, body);
     return { message: 'Movie updated successfully', movie };
+  }
+
+  @Delete(':id')
+  @UseGuards(AuthGuard(), UserRoleGuard)
+  @RoleProtected(ValidRoles.admin)
+  async deleteMovie(@Param('id') id: string) {
+    await this.deleteMovieUseCase.execute(id);
+    return { message: 'Movie deleted successfully' };
   }
 
   @Post('/sync')

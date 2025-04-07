@@ -10,6 +10,7 @@ import { GetAllMoviesUseCase } from './application/use-cases/get-all-movies/get-
 import { GetMovieByIdUseCase } from './application/use-cases/get-movie-by-id/get-movie-by-id.usecase';
 import { CreateMovieUseCase } from './application/use-cases/create-movie/create-movie.usecase';
 import { UpdateMovieUseCase } from './application/use-cases/update-movie/update-movie.usecase';
+import { DeleteMovieUseCase } from './application/use-cases/delete-movie/delete-movie.usecase';
 
 export const REPOSITORIES: Provider[] = [
   {
@@ -33,6 +34,7 @@ export const USE_CASES: Provider[] = [
   GetMovieByIdUseCase,
   CreateMovieUseCase,
   UpdateMovieUseCase,
+  DeleteMovieUseCase,
 ];
 
 export const SERVICES: Provider[] = [
