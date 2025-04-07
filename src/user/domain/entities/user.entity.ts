@@ -1,4 +1,3 @@
-import { RegisterUserRequest } from '@src/user/application/use-cases/register-user/register-user.request';
 import { CreateUserInput } from './create-user-input';
 
 export class User {

@@ -4,8 +4,9 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { EntityClassOrSchema } from '@nestjs/typeorm/dist/interfaces/entity-class-or-schema.type';
 import { ConfigKeys } from './config-keys';
 import { UserPersistence } from '@src/user/infrastructure/persistence/typeorm-user.persistence';
+import { MoviePersistence } from '@src/movies/infrastructure/persistence/movie.persistence';
 
-export const ENTITIES = [UserPersistence];
+export const ENTITIES = [UserPersistence, MoviePersistence];
 
 const ORM_TYPE = 'postgres';
 

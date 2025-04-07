@@ -5,20 +5,23 @@ import {
   REPOSITORIES,
   SERVICES,
   USE_CASES,
-} from './user.module-components';
+} from './movies.module-components';
 import { PgSqlModule } from '@src/config/pgsql.module';
 import { ConfigurationModule } from '@src/config/configuration.module';
-import { JwtConfigModule } from '@src/config/jwt.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { HttpModule } from '@nestjs/axios';
 import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
     ConfigurationModule.forRoot(),
     PgSqlModule.forRoot(),
-    JwtConfigModule.forRoot(),
+    ScheduleModule.forRoot(),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+    HttpModule,
   ],
   providers: [...USE_CASES, ...REPOSITORIES, ...SERVICES, ...CLIENTS],
   controllers: [...CONTROLLERS],
   exports: [],
 })
-export class UserModule {}
+export class MoviesModule {}
