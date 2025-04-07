@@ -2,13 +2,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToMany,
   BeforeInsert,
   BeforeUpdate,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-// import { Product } from '../../../product/infrastructure/database/typeorm/entities/product.typeorm.entity';
 
 @Entity('users')
 export class UserPersistence {
@@ -29,9 +27,6 @@ export class UserPersistence {
 
   @Column('text', { array: true, default: ['user'] })
   roles: string[];
-
-  // @OneToMany(() => Product, (product) => product.user)
-  // product: Product[];
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;

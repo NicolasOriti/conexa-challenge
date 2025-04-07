@@ -45,9 +45,7 @@ export class PgSqlModule {
       username: configService.get<string>(ConfigKeys.DB_USER),
       password: configService.get<string>(ConfigKeys.DB_PASSWORD),
       database: configService.get<string>(ConfigKeys.DB_NAME),
-      synchronize: true,
-      migrations: ['dist/migrations/*{.ts,.js}'],
-      migrationsRun: false,
+      synchronize: false,
       entities: entities,
     } as TypeOrmModuleOptions;
   }
