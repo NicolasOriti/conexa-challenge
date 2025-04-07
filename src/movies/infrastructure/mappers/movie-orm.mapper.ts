@@ -16,7 +16,7 @@ export class MovieOrmMapper {
 
   static toOrm(domain: Movie): MoviePersistence {
     const orm = new MoviePersistence();
-
+    orm.id = domain.id!;
     orm.title = domain.title;
     orm.director = domain.director;
     orm.producer = domain.producer;

@@ -9,6 +9,7 @@ import { SyncMoviesUseCase } from './application/use-cases/sync-movies/sync-movi
 import { GetAllMoviesUseCase } from './application/use-cases/get-all-movies/get-all-movies.usecase';
 import { GetMovieByIdUseCase } from './application/use-cases/get-movie-by-id/get-movie-by-id.usecase';
 import { CreateMovieUseCase } from './application/use-cases/create-movie/create-movie.usecase';
+import { UpdateMovieUseCase } from './application/use-cases/update-movie/update-movie.usecase';
 
 export const REPOSITORIES: Provider[] = [
   {
@@ -31,6 +32,7 @@ export const USE_CASES: Provider[] = [
   GetAllMoviesUseCase,
   GetMovieByIdUseCase,
   CreateMovieUseCase,
+  UpdateMovieUseCase,
 ];
 
 export const SERVICES: Provider[] = [
