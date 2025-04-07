@@ -19,7 +19,20 @@ export class TypeOrmUserRepository implements UserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const userPersistence = await this.repository.findOne({ where: { email } });
+    const userPersistence = await this.repository.findOne({
+      where: { email },
+      select: {
+        email: true,
+        password: true,
+        id: true,
+        fullname: true,
+        isActive: true,
+        roles: true,
+      },
+    });
+
+    if (!userPersistence) return null;
+
     return userPersistence ? UserOrmMapper.toDomain(userPersistence) : null;
   }
 }
