@@ -4,7 +4,7 @@ import { RegisterUserResponse } from './register-user.response';
 import { UserRepository } from '@src/user/domain/repositories/user.repository';
 import { EncryptorService } from '@src/user/domain/services/encryptor.service';
 import { TokenService } from '@src/user/domain/services/token.service';
-import { Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class RegisterUserUseCase {
@@ -19,7 +19,7 @@ export class RegisterUserUseCase {
 
   async execute(req: RegisterUserRequest): Promise<RegisterUserResponse> {
     const existing = await this.userRepository.findByEmail(req.email);
-    if (existing) throw new Error('Email already in use');
+    if (existing) throw new ConflictException(`Email already in use`);
 
     const hashedPassword = this.encryptor.hash(req.password);
 

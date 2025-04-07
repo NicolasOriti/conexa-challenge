@@ -21,7 +21,15 @@ import { CreateMovieRequest } from '@src/movies/application/use-cases/create-mov
 import { UpdateMovieRequest } from '@src/movies/application/use-cases/update-movie/update-movie.request';
 import { UpdateMovieUseCase } from '@src/movies/application/use-cases/update-movie/update-movie.usecase';
 import { DeleteMovieUseCase } from '@src/movies/application/use-cases/delete-movie/delete-movie.usecase';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('movies')
+@ApiBearerAuth()
 @Controller('movies')
 export class MovieController {
   constructor(
@@ -33,16 +41,24 @@ export class MovieController {
     private readonly deleteMovieUseCase: DeleteMovieUseCase,
   ) {}
 
+  @Get()
   @UseGuards(AuthGuard(), UserRoleGuard)
   @RoleProtected(ValidRoles.user)
-  @Get()
+  @ApiOperation({ summary: 'Obtener todas las películas' })
+  @ApiResponse({
+    status: 200,
+    description: 'Películas obtenidas correctamente',
+  })
   async findAll() {
     return this.getAllMoviesUseCase.execute();
   }
 
+  @Get(':id')
   @UseGuards(AuthGuard(), UserRoleGuard)
   @RoleProtected(ValidRoles.user)
-  @Get(':id')
+  @ApiOperation({ summary: 'Obtener película por ID' })
+  @ApiResponse({ status: 200, description: 'Película encontrada' })
+  @ApiResponse({ status: 404, description: 'Película no encontrada' })
   async findOne(@Param('id') id: string) {
     return this.getMovieByIdUseCase.execute(id);
   }
@@ -50,6 +66,8 @@ export class MovieController {
   @Post()
   @UseGuards(AuthGuard(), UserRoleGuard)
   @RoleProtected(ValidRoles.admin)
+  @ApiOperation({ summary: 'Crear nueva película' })
+  @ApiResponse({ status: 201, description: 'Película creada correctamente' })
   async createMovie(@Body() body: CreateMovieRequest) {
     const movie = await this.createMovieUseCase.execute(body);
     return { message: 'Movie created successfully', movie };
@@ -58,6 +76,11 @@ export class MovieController {
   @Patch(':id')
   @UseGuards(AuthGuard(), UserRoleGuard)
   @RoleProtected(ValidRoles.admin)
+  @ApiOperation({ summary: 'Actualizar película existente' })
+  @ApiResponse({
+    status: 200,
+    description: 'Película actualizada correctamente',
+  })
   async updateMovie(@Param('id') id: string, @Body() body: UpdateMovieRequest) {
     const movie = await this.updateMovieUseCase.execute(id, body);
     return { message: 'Movie updated successfully', movie };
@@ -66,6 +89,8 @@ export class MovieController {
   @Delete(':id')
   @UseGuards(AuthGuard(), UserRoleGuard)
   @RoleProtected(ValidRoles.admin)
+  @ApiOperation({ summary: 'Eliminar película' })
+  @ApiResponse({ status: 200, description: 'Película eliminada correctamente' })
   async deleteMovie(@Param('id') id: string) {
     await this.deleteMovieUseCase.execute(id);
     return { message: 'Movie deleted successfully' };
@@ -74,6 +99,11 @@ export class MovieController {
   @Post('/sync')
   @RoleProtected(ValidRoles.admin)
   @UseGuards(AuthGuard(), UserRoleGuard)
+  @ApiOperation({ summary: 'Sincronizar películas con SWAPI' })
+  @ApiResponse({
+    status: 200,
+    description: 'Películas sincronizadas correctamente',
+  })
   async syncMovies(@Req() req: any) {
     const count = await this.syncMoviesUseCase.execute();
     return { message: `${count} new movies were synchronized` };
