@@ -14,6 +14,7 @@ describe('CreateMovieUseCase', () => {
       save: jest.fn(),
       findAll: jest.fn(),
       findById: jest.fn(),
+      delete: jest.fn(),
     };
     useCase = new CreateMovieUseCase(movieRepository);
   });
