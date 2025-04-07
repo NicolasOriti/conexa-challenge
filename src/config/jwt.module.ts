@@ -16,7 +16,7 @@ export class JwtConfigModule {
           useFactory: (configService: ConfigService): JwtModuleOptions => ({
             secret: configService.get<string>(ConfigKeys.JWT_SECRET),
             signOptions: {
-              expiresIn: '2h',
+              expiresIn: '24h',
             },
           }),
         }),
