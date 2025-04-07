@@ -4,6 +4,7 @@ import { MoviePersistence } from '../persistence/movie.persistence';
 import { Injectable } from '@nestjs/common';
 import { MovieRepository } from '@src/movies/domain/repositories/movie.repository';
 import { Movie } from '@src/movies/domain/entities/movie.entity';
+import { MovieOrmMapper } from '../mappers/movie-orm.mapper';
 
 @Injectable()
 export class TypeOrmMovieRepository implements MovieRepository {
@@ -13,14 +14,19 @@ export class TypeOrmMovieRepository implements MovieRepository {
   ) {}
 
   async save(movie: Movie): Promise<void> {
-    const entity = this.repository.create({
-      title: movie.title,
-      director: movie.director,
-      producer: movie.producer,
-      releaseDate: movie.releaseDate,
-    });
+    const orm = MovieOrmMapper.toOrm(movie);
 
-    await this.repository.save(entity);
+    await this.repository.save(orm);
+  }
+
+  async findAll(): Promise<Movie[]> {
+    const entities = await this.repository.find();
+    return entities.map(MovieOrmMapper.toDomain);
+  }
+
+  async findById(id: string): Promise<Movie | null> {
+    const entity = await this.repository.findOne({ where: { id } });
+    return entity ? MovieOrmMapper.toDomain(entity) : null;
   }
 
   async findByTitle(title: string): Promise<Movie | null> {

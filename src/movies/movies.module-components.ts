@@ -6,6 +6,8 @@ import { SwapiClient } from './infrastructure/clients/swapi.client';
 import { TypeOrmMovieRepository } from './infrastructure/repositories/typeorm-movie.repository';
 import { MovieController } from './infrastructure/controllers/movie.controller';
 import { SyncMoviesUseCase } from './application/use-cases/sync-movies/sync-movies.usecase';
+import { GetAllMoviesUseCase } from './application/use-cases/get-all-movies/get-all-movies.usecase';
+import { GetMovieByIdUseCase } from './application/use-cases/get-movie-by-id/get-movie-by-id.usecase';
 
 export const REPOSITORIES: Provider[] = [
   {
@@ -23,7 +25,11 @@ export const CLIENTS: Provider[] = [
   },
 ];
 
-export const USE_CASES: Provider[] = [SyncMoviesUseCase];
+export const USE_CASES: Provider[] = [
+  SyncMoviesUseCase,
+  GetAllMoviesUseCase,
+  GetMovieByIdUseCase,
+];
 
 export const SERVICES: Provider[] = [
   {
