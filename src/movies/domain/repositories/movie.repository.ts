@@ -5,4 +5,5 @@ export interface MovieRepository {
   findAll(): Promise<Movie[]>;
   findById(id: string): Promise<Movie | null>;
   findByTitle(title: string): Promise<Movie | null>;
+  delete(id: string): Promise<void>;
 }

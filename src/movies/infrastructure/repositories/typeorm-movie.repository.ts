@@ -37,4 +37,8 @@ export class TypeOrmMovieRepository implements MovieRepository {
 
     return movie;
   }
+
+  async delete(id: string): Promise<void> {
+    await this.repository.delete({ id });
+  }
 }
